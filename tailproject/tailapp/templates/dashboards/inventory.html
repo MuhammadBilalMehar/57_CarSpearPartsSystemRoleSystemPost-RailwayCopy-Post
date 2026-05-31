@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="space-y-6">
+    <section class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <p class="text-sm font-semibold uppercase tracking-wide text-emerald-700">Inventory Dashboard</p>
+        <h1 class="mt-2 text-3xl font-bold text-slate-950">Stock and catalog workspace</h1>
+        <p class="mt-2 max-w-2xl text-sm text-slate-600">Add and update parts, categories, brands, and vehicle records. Delete actions are reserved for managers and super admins.</p>
+    </section>
+
+    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p class="text-sm text-slate-500">Products</p>
+            <p class="mt-2 text-3xl font-bold">{{ products }}</p>
+        </div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p class="text-sm text-slate-500">Categories</p>
+            <p class="mt-2 text-3xl font-bold">{{ categories }}</p>
+        </div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p class="text-sm text-slate-500">Brands</p>
+            <p class="mt-2 text-3xl font-bold">{{ brands }}</p>
+        </div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p class="text-sm text-slate-500">Vehicles</p>
+            <p class="mt-2 text-3xl font-bold">{{ vehicles }}</p>
+        </div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <p class="text-sm text-slate-500">Low Stock</p>
+            <p class="mt-2 text-3xl font-bold">{{ low_stock_products }}</p>
+        </div>
+    </section>
+
+    <section class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <h2 class="text-xl font-semibold text-slate-950">Inventory actions</h2>
+        <div class="mt-4 flex flex-wrap gap-3">
+            {% if perms.tailapp.add_product %}<a href="{% url 'add_product' %}" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">Add Product</a>{% endif %}
+            {% if perms.tailapp.add_category %}<a href="{% url 'add_category' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Add Category</a>{% endif %}
+            {% if perms.tailapp.add_brand %}<a href="{% url 'add_brand' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Add Brand</a>{% endif %}
+            {% if perms.tailapp.add_vehicle %}<a href="{% url 'add_vehicle' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Add Vehicle</a>{% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}

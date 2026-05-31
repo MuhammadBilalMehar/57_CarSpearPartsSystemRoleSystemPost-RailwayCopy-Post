@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="space-y-6">
+    <section class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <p class="text-sm font-semibold uppercase tracking-wide text-blue-700">Manager Dashboard</p>
+        <h1 class="mt-2 text-3xl font-bold text-slate-950">Operations control</h1>
+        <p class="mt-2 max-w-2xl text-sm text-slate-600">Manage the full spare-parts catalog, including create, update, and delete permissions for inventory records.</p>
+    </section>
+
+    <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Products</p><p class="mt-2 text-3xl font-bold">{{ products }}</p></div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Categories</p><p class="mt-2 text-3xl font-bold">{{ categories }}</p></div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Brands</p><p class="mt-2 text-3xl font-bold">{{ brands }}</p></div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Vehicles</p><p class="mt-2 text-3xl font-bold">{{ vehicles }}</p></div>
+        <div class="rounded-lg bg-white p-5 shadow-sm ring-1 ring-slate-200"><p class="text-sm text-slate-500">Low Stock</p><p class="mt-2 text-3xl font-bold">{{ low_stock_products }}</p></div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+        <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h2 class="text-xl font-semibold text-slate-950">Management actions</h2>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="{% url 'add_product' %}" class="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white">Add Product</a>
+                <a href="{% url 'category_list' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Categories</a>
+                <a href="{% url 'brand_list' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Brands</a>
+                <a href="{% url 'vehicle_list' %}" class="rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">Vehicles</a>
+            </div>
+        </div>
+        <div class="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <h2 class="text-xl font-semibold text-slate-950">Recent products</h2>
+            <ul class="mt-4 divide-y divide-slate-100">
+                {% for product in latest_products %}
+                    <li class="py-3 text-sm"><span class="font-medium text-slate-900">{{ product.name }}</span><span class="text-slate-500"> - {{ product.part_number }}</span></li>
+                {% empty %}
+                    <li class="py-3 text-sm text-slate-500">No products yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}

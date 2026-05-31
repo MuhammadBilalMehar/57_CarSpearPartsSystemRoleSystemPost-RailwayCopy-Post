@@ -1,0 +1,57 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Car Spare Parts System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-900 antialiased">
+
+<div class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(14,165,233,0.16),_transparent_32rem),linear-gradient(180deg,_#f8fafc_0%,_#eef2f7_100%)]">
+<nav class="sticky top-0 z-40 border-b border-white/70 bg-white/85 shadow-sm shadow-slate-200/60 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 sm:px-6 lg:px-8">
+        <a href="{% url 'dashboard' %}" class="flex items-center gap-3">
+            <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white shadow-lg shadow-slate-900/20">SP</span>
+            <span>
+                <span class="block text-lg font-extrabold tracking-tight text-slate-950">Spare Parts System</span>
+                <span class="block text-xs font-medium text-slate-500">Role based inventory control</span>
+            </span>
+        </a>
+        <div class="flex flex-wrap items-center gap-2">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" class="rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700">Dashboard</a>
+                {% if perms.tailapp.view_product %}
+                    <a href="{% url 'product_list' %}" class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Products</a>
+                {% endif %}
+                {% if perms.tailapp.view_category %}
+                    <a href="{% url 'category_list' %}" class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Categories</a>
+                {% endif %}
+                {% if perms.tailapp.view_brand %}
+                    <a href="{% url 'brand_list' %}" class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Brands</a>
+                {% endif %}
+                {% if perms.tailapp.view_vehicle %}
+                    <a href="{% url 'vehicle_list' %}" class="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200">Vehicles</a>
+                {% endif %}
+                <span class="rounded-full bg-slate-100 px-3 py-2 text-sm text-slate-700">{{ user.username }}</span>
+                <form method="post" action="{% url 'logout' %}" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Logout</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    {% block content %}
+    {% endblock %}
+</main>
+</div>
+
+</body>
+</html>

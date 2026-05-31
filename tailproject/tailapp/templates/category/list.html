@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="mb-6 flex flex-col justify-between gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:flex-row sm:items-center">
+    <div>
+        <p class="text-sm font-bold uppercase tracking-wide text-emerald-700">Categories</p>
+        <h1 class="mt-1 text-3xl font-extrabold text-slate-950">Product groups</h1>
+        <p class="mt-2 text-sm text-slate-500">Organize spare parts into clean, searchable groups.</p>
+    </div>
+    {% if perms.tailapp.add_category %}
+    <a href="{% url 'add_category' %}" class="btn btn-primary">Add Category</a>
+    {% endif %}
+</section>
+
+<div class="overflow-x-auto rounded-lg ring-1 ring-slate-200">
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for cat in categories %}
+        <tr>
+            <td>{{ cat.name }}</td>
+            <td>
+                {% if perms.tailapp.change_category %}
+                <a href="{% url 'edit_category' cat.id %}" class="btn btn-warning btn-sm">Edit</a>
+                {% endif %}
+                {% if perms.tailapp.delete_category %}
+                <a href="{% url 'delete_category' cat.id %}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="mb-6 flex flex-col justify-between gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:flex-row sm:items-center">
+    <div>
+        <p class="text-sm font-bold uppercase tracking-wide text-sky-700">Products</p>
+        <h1 class="mt-1 text-3xl font-extrabold text-slate-950">Spare parts catalog</h1>
+        <p class="mt-2 text-sm text-slate-500">Browse part numbers, vehicle fitment, pricing, and stock levels.</p>
+    </div>
+    {% if perms.tailapp.add_product %}
+    <a href="{% url 'add_product' %}" class="btn btn-primary">Add Product</a>
+    {% endif %}
+</section>
+
+<div class="overflow-x-auto rounded-lg ring-1 ring-slate-200">
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Part No</th>
+            <th>Category</th>
+            <th>Brand</th>
+            <th>Vehicle</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.part_number }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.brand.name }}</td>
+            <td>
+                {% for vehicle in product.vehicle.all %}
+                    {{ vehicle }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    -
+                {% endfor %}
+            </td>
+            <td>{{ product.sale_price }}</td>
+            <td>{{ product.stock_quantity }}</td>
+
+            <td>
+                {% if perms.tailapp.change_product %}
+                <a href="{% url 'edit_product' product.id %}" class="btn btn-sm btn-warning">Edit</a>
+                {% endif %}
+                {% if perms.tailapp.delete_product %}
+                <a href="{% url 'delete_product' product.id %}" class="btn btn-sm btn-danger">Delete</a>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% empty %}
+            <tr>
+                <td colspan="8" class="text-center text-muted">No products yet</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

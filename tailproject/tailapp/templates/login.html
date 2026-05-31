@@ -1,0 +1,58 @@
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Spare Parts System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    {% tailwind_css %}
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-900 antialiased">
+<main class="grid min-h-screen lg:grid-cols-[1.1fr_0.9fr]">
+    <section class="hidden bg-[linear-gradient(135deg,_rgba(14,165,233,0.26),_rgba(16,185,129,0.16)),url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&w=1400&q=80')] bg-cover bg-center lg:block">
+        <div class="flex h-full flex-col justify-end bg-slate-950/55 p-12 text-white">
+            <span class="mb-4 inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wide backdrop-blur">Role Based Access</span>
+            <h1 class="max-w-xl text-5xl font-black leading-tight">Spare parts control, tuned for every team.</h1>
+            <p class="mt-5 max-w-lg text-base text-slate-200">Super Admin, Manager, Inventory, and Sales each land in the right workspace after login.</p>
+        </div>
+    </section>
+
+    <section class="flex items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.22),_transparent_24rem),#f8fafc] px-4 py-10">
+        <div class="w-full max-w-md rounded-xl bg-white p-8 shadow-2xl shadow-slate-950/10 ring-1 ring-slate-200">
+            <div class="mb-8">
+                <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-950 text-sm font-black text-white">SP</div>
+                <h2 class="text-3xl font-black text-slate-950">Welcome back</h2>
+                <p class="mt-2 text-sm text-slate-500">Sign in to continue to your role dashboard.</p>
+            </div>
+
+            <form method="POST" class="space-y-5">
+                {% csrf_token %}
+                <div>
+                    <label for="username">Username</label>
+                    <input id="username" type="text" name="username" placeholder="Enter username" required>
+                </div>
+
+                <div>
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                {% if error %}
+                    <div class="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">{{ error }}</div>
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary w-full">Sign In</button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-slate-500">
+                Don’t have an account?
+                <a href="{% url 'register' %}" class="font-bold text-sky-700 hover:text-sky-900">Create account</a>
+            </p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="mx-auto max-w-2xl rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200">
+    <p class="text-sm font-bold uppercase tracking-wide text-emerald-700">New category</p>
+    <h1 class="mt-1 text-3xl font-extrabold text-slate-950">Add product category</h1>
+    <p class="mt-2 text-sm text-slate-500">Create a clear group for related spare parts.</p>
+
+    <form method="POST" class="form-shell mt-6">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="mt-6 flex flex-wrap gap-3">
+            <button type="submit" class="btn btn-success">Save Category</button>
+            <a href="{% url 'category_list' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</section>
+
+{% endblock %}
