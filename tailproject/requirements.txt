@@ -3,7 +3,10 @@ Django==6.0.4
 django-browser-reload==1.21.0
 django-tailwind==4.4.2
 gunicorn==23.0.0
+packaging==26.2
+pillow==12.2.0
 psycopg==3.2.13
-whitenoise==6.11.0
 pytailwindcss==0.3.0
 sqlparse==0.5.5
+typing_extensions==4.15.0
+whitenoise==6.11.0
